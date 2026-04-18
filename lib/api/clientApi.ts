@@ -3,7 +3,7 @@ import type { AxiosResponse } from "axios";
 import type { Note, NoteTag } from "../types/note";
 import type { RegisterRequest, LoginRequest, CheckSessionRequest } from "@/types/auth"
 import type { User } from "@/types/user"
-import api from "./api"
+import api from "./api/api"
 
 export interface FetchNotesResponse {
   notes: Note[];

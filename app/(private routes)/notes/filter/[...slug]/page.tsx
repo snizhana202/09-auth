@@ -5,7 +5,7 @@ import {
   HydrationBoundary,
   dehydrate,
 } from "@tanstack/react-query";
-import { fetchNotesServer  } from "@/lib/serverApi";
+import { fetchNotesServer  } from "@/lib/api/serverApi";
 import NotesClient from "./Notes.client";
 import type { Metadata } from "next";
 import { cookies } from "next/headers";

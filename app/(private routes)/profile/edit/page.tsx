@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/lib/store/authStore";
-import { updateMe } from "@/lib/clientApi";
+import { updateMe } from "@/lib/api/clientApi";
 
 export default function EditProfile() {
   const router = useRouter();

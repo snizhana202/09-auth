@@ -1,7 +1,7 @@
 import type { Note } from "../types/note";
 import type { CheckSessionRequest } from "@/types/auth";
 import type { User } from "@/types/user";
-import api from "./api";
+import api from "./api/api";
 
 export async function fetchNotesServer(
   cookies: string,

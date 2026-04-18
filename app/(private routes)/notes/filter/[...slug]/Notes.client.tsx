@@ -4,7 +4,7 @@
 import css from "@/components/NotePages/NotePages.module.css";
 import NoteList from "@/components/NoteList/NoteList";
 import { useQuery } from "@tanstack/react-query";
-import { fetchNotes } from "@/lib/clientApi";
+import { fetchNotes } from "@/lib/api/clientApi";
 import { useEffect, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import SearchBox from "@/components/SearchBox/SearchBox";
