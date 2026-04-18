@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://notehub-api.goit.study/api",
+  baseURL: process.env.NEXT_PUBLIC_API_URL + '/api',
   withCredentials: true,
 });
 
