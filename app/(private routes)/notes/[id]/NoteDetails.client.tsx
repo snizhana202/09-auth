@@ -3,7 +3,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { fetchNoteById } from "@/lib/api";
+import { fetchNoteById } from "@/lib/clientApi";
 import css from "./NoteDetails.module.css";
 import { useRouter } from "next/navigation";
 import { Note } from "@/types/note";

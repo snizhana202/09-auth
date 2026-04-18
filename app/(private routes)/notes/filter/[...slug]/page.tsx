@@ -5,19 +5,19 @@ import {
   HydrationBoundary,
   dehydrate,
 } from "@tanstack/react-query";
-import { fetchNotes } from "@/lib/api";
-import NotesClient from "@/app/notes/filter/[...slug]/Notes.client";
+import { fetchNotesServer  } from "@/lib/serverApi";
+import NotesClient from "./Notes.client";
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 
 interface NotesFiltersProps {
-  params: Promise<{ slug: string[] }>;
+  params: { slug: string[] };
 }
 
 export async function generateMetadata({
   params,
 }: NotesFiltersProps): Promise<Metadata> {
-  const resolvedParams = await params;
-  const slug = resolvedParams.slug ?? ["all"];
+  const slug = params.slug ?? ["all"];
   const category = slug[0] === "all" ? "" : slug[0];
 
   return {
@@ -40,15 +40,17 @@ export async function generateMetadata({
 }
 
 export default async function NotesFilters({ params }: NotesFiltersProps) {
-  const resolvedParams = await params;
-  const slug = resolvedParams.slug ?? ["all"];
+  const slug = params.slug ?? ["all"];
   const category = slug[0] === "all" ? "" : slug[0];
 
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
     queryKey: ["notes", category],
-    queryFn: () => fetchNotes(1, 12, category),
+    queryFn: async () => {
+       const cookieStore = cookies().toString();
+      return fetchNotesServer(cookieStore, 1, 12, category);
+    },
   });
 
   return (
