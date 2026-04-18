@@ -10,13 +10,14 @@ import { updateMe } from "@/lib/api/clientApi";
 
 export default function EditProfile() {
   const router = useRouter();
-  const { user } = useAuthStore();
+  const { user, setUser } = useAuthStore();
   const [username, setUsername] = useState(user?.username ?? "");
 
   const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await updateMe({ username });
+      const updatedUser = await updateMe({ username });
+      setUser(updatedUser);
       router.push("/profile");
     } catch (error) {
       console.error("Failed to update profile:", error);

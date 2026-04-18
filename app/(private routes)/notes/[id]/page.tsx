@@ -10,15 +10,12 @@ import NoteDetailsClient from "./NoteDetails.client";
 import { Metadata } from "next";
 import { cookies } from "next/headers";
 
-
 type Props = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
-export async function generateMetadata({
-  params,
-}: Props): Promise<Metadata> {
-  const { id } = params;
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = await params;
   const cookieStore = cookies().toString();
   const note = await fetchNoteByIdServer(cookieStore, id);
 
@@ -46,7 +43,7 @@ export async function generateMetadata({
 }
 
 export default async function NoteDetails({ params }: Props) {
-  const { id } = params;
+  const { id } = await params;
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
@@ -63,5 +60,3 @@ export default async function NoteDetails({ params }: Props) {
     </HydrationBoundary>
   );
 }
-
-

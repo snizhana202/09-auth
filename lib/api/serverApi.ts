@@ -1,5 +1,5 @@
 import type { Note } from "../../types/note";
-import type { CheckSessionRequest } from "@/types/auth";
+import type { CheckSessionResponse } from "@/types/auth";
 import type { User } from "@/types/user";
 import api from "./api";
 
@@ -34,15 +34,15 @@ export async function fetchNoteByIdServer(
   return data;
 }
 
-export async function checkSessionServer(cookies: string): Promise<boolean> {
-  const { data } = await api.get<CheckSessionRequest>("/auth/session", {
+export async function checkSessionServer(cookies: string): Promise<CheckSessionResponse> {
+  const { data } = await api.get<CheckSessionResponse>("/auth/session", {
     headers: { Cookie: cookies },
   });
-  return data.success;
+  return data;
 }
 
 export async function getMeServer(cookies: string): Promise<User> {
-  const { data } = await api.get<User>("/auth/me", {
+  const { data } = await api.get<User>("/users/me", {
     headers: { Cookie: cookies },
   });
   return data;
