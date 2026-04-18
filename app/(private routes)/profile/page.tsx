@@ -33,7 +33,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Profile() {
-  const user = await getMeServer("");
+  const user = await getMeServer();
 
   return (
     <section>

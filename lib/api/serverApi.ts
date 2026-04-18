@@ -2,6 +2,7 @@ import type { Note } from "../../types/note";
 import type { CheckSessionResponse } from "@/types/auth";
 import type { User } from "@/types/user";
 import api from "./api";
+import { cookies } from 'next/headers';
 
 export async function fetchNotesServer(
   cookies: string,
@@ -41,9 +42,10 @@ export async function checkSessionServer(cookies: string): Promise<CheckSessionR
   return data;
 }
 
-export async function getMeServer(cookies: string): Promise<User> {
+export async function getMeServer(): Promise<User> {
+  const cookieStore = await cookies();
   const { data } = await api.get<User>("/users/me", {
-    headers: { Cookie: cookies },
+    headers: { Cookie: cookieStore.toString() },
   });
   return data;
 }
