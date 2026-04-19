@@ -3,6 +3,7 @@ import type { CheckSessionResponse } from "@/types/auth";
 import type { User } from "@/types/user";
 import api from "./api";
 import { cookies } from 'next/headers';
+import type { AxiosResponse } from "axios";
 
 export async function fetchNotesServer(
   page: number,
@@ -26,19 +27,19 @@ export async function fetchNotesServer(
 }
 
 export async function fetchNoteByIdServer(id: string,): Promise<Note> {
-  const cookieStore = cookies().toString();
+  const cookieStore = cookies().toString
   const { data } = await api.get(`/notes/${id}`, {
-    headers: { Cookie: cookieStore },
+    headers: { Cookie: cookieStore.toString() },
   });
   return data;
 }
 
-export async function checkSessionServer(): Promise<CheckSessionResponse> {
+export async function checkSessionServer(): Promise<AxiosResponse<CheckSessionResponse>> {
   const cookieStore = cookies().toString();
-  const { data } = await api.get<CheckSessionResponse>("/auth/session", {
+  const response  = await api.get<CheckSessionResponse>("/auth/session", {
     headers: { Cookie: cookieStore },
   });
-  return data;
+  return response;
 }
 
 export async function getMeServer(): Promise<User> {

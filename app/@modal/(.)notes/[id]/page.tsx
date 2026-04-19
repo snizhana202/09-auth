@@ -7,7 +7,7 @@ import {
 } from "@tanstack/react-query";
 import { fetchNoteByIdServer  } from '@/lib/api/serverApi';
 import NotePreviewClient from "./NotePreview.client";
-import { cookies } from "next/headers";
+
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -16,12 +16,13 @@ type Props = {
 export default async function NotePreview({ params }: Props) {
   const { id } = await params;
   const queryClient = new QueryClient();
-  const cookieStore = cookies();
   
 
   await queryClient.prefetchQuery({
     queryKey: ["note", id],
-    queryFn: () => fetchNoteByIdServer(cookieStore.toString()),
+    queryFn: async () => {
+      return fetchNoteByIdServer(id);
+    },
   });
 
   return (

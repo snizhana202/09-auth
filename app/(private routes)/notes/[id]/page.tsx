@@ -8,7 +8,7 @@ import {
 import { fetchNoteByIdServer } from "@/lib/api/serverApi";
 import NoteDetailsClient from "./NoteDetails.client";
 import { Metadata } from "next";
-import { cookies } from "next/headers";
+
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -16,8 +16,7 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
-  const cookieStore = cookies().toString();
-  const note = await fetchNoteByIdServer(cookieStore);
+  const note = await fetchNoteByIdServer(id);
 
   const previewContent = note?.content
     ? note.content.slice(0, 100) + "..."
@@ -49,8 +48,7 @@ export default async function NoteDetails({ params }: Props) {
   await queryClient.prefetchQuery({
     queryKey: ["note", id],
     queryFn: async () => {
-      const cookieStore = cookies().toString();
-      return fetchNoteByIdServer(cookieStore);
+      return fetchNoteByIdServer(id);
     },
   });
 

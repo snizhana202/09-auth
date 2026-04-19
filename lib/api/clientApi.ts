@@ -91,7 +91,11 @@ export const getMe = async () => {
   return data;
 };
 
-export const updateMe = async (payload: Partial<User>) => {
-  const { data } = await api.patch<User>("/users/me", payload);
+export const updateMe = async (payload: FormData | Partial<User>) => {
+  const { data } = await api.patch<User>("/users/me", payload, {
+    headers: payload instanceof FormData
+      ? { "Content-Type": "multipart/form-data" }
+      : undefined,
+  });
   return data;
 };

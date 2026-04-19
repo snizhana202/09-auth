@@ -17,24 +17,24 @@ export default function EditProfile() {
 
 
   const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    try {
-      const formData = new FormData();
+  e.preventDefault();
+  try {
+    const formData = new FormData();
     formData.append("username", username);
     if (file) {
       formData.append("avatar", file);
     }
 
-      const updatedUser = await updateMe({ username, avatar: previewUrl });
-      setUser(updatedUser);
-      router.push("/profile");
-    } catch (error) {
-      console.error("Failed to update profile:", error);
-    }
-  };
+    const updatedUser = await updateMe(formData);
+    setUser(updatedUser);
+    router.push("/profile");
+  } catch (error) {
+    console.error("Failed to update profile:", error);
+  }
+};
 
   const handleCancel = () => {
-    router.push("/profile");
+    router.back();
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
