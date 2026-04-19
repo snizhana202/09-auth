@@ -17,7 +17,7 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   const cookieStore = cookies().toString();
-  const note = await fetchNoteByIdServer(cookieStore, id);
+  const note = await fetchNoteByIdServer(cookieStore);
 
   const previewContent = note?.content
     ? note.content.slice(0, 100) + "..."
@@ -50,7 +50,7 @@ export default async function NoteDetails({ params }: Props) {
     queryKey: ["note", id],
     queryFn: async () => {
       const cookieStore = cookies().toString();
-      return fetchNoteByIdServer(cookieStore, id);
+      return fetchNoteByIdServer(cookieStore);
     },
   });
 

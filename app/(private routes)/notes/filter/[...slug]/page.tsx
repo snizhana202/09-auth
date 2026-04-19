@@ -49,7 +49,7 @@ export default async function NotesFilters({ params }: NotesFiltersProps) {
     queryKey: ["notes", category],
     queryFn: async () => {
        const cookieStore = cookies().toString();
-      return fetchNotesServer(cookieStore, 1, 12, category);
+      return fetchNotesServer( 1, 12, category, cookieStore);
     },
   });
 
