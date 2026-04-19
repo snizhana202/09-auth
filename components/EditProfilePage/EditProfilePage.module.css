@@ -26,12 +26,64 @@
   text-align: left;
 }
 
+.avatarWrapper {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 24px auto;
+}
+
 .avatar {
   border-radius: 50%;
   object-fit: cover;
   display: block;
-  margin: 0 auto 24px auto;
+  width: 100%;
+  height: 100%;
 }
+
+.choosePhoto {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: transparent;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.removePhoto {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: transparent;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.avatarWrapper:hover .choosePhoto, .removePhoto {
+  opacity: 1;
+}
+
+.avatarInput {
+  display: none;
+}
+
 
 .profileInfo {
   font-size: 18px;

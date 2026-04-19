@@ -5,12 +5,12 @@ import api from "./api";
 import { cookies } from 'next/headers';
 
 export async function fetchNotesServer(
-  cookies: string,
   page: number,
   perPage?: number,
   tag?: string,
   search?: string,
 ) {
+  const cookieStore = cookies().toString();
   const params: Record<string, unknown> = {
     page,
     perPage,
@@ -20,24 +20,23 @@ export async function fetchNotesServer(
 
   const { data } = await api.get("/notes", {
     params,
-    headers: { Cookie: cookies },
+    headers: { Cookie: cookieStore },
   });
   return data;
 }
 
-export async function fetchNoteByIdServer(
-  cookies: string,
-  id: string,
-): Promise<Note> {
+export async function fetchNoteByIdServer(id: string,): Promise<Note> {
+  const cookieStore = cookies().toString();
   const { data } = await api.get(`/notes/${id}`, {
-    headers: { Cookie: cookies },
+    headers: { Cookie: cookieStore },
   });
   return data;
 }
 
-export async function checkSessionServer(cookies: string): Promise<CheckSessionResponse> {
+export async function checkSessionServer(): Promise<CheckSessionResponse> {
+  const cookieStore = cookies().toString();
   const { data } = await api.get<CheckSessionResponse>("/auth/session", {
-    headers: { Cookie: cookies },
+    headers: { Cookie: cookieStore },
   });
   return data;
 }

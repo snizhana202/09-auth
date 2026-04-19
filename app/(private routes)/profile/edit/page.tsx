@@ -12,11 +12,20 @@ export default function EditProfile() {
   const router = useRouter();
   const { user, setUser } = useAuthStore();
   const [username, setUsername] = useState(user?.username ?? "");
+  const [previewUrl, setPreviewUrl] = useState<string>(user?.avatar || "");
+  const [file, setFile] = useState<File | null>(null);
+
 
   const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const updatedUser = await updateMe({ username });
+      const formData = new FormData();
+    formData.append("username", username);
+    if (file) {
+      formData.append("avatar", file);
+    }
+
+      const updatedUser = await updateMe({ username, avatar: previewUrl });
       setUser(updatedUser);
       router.push("/profile");
     } catch (error) {
@@ -28,6 +37,28 @@ export default function EditProfile() {
     router.push("/profile");
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      alert("Only images allowed");
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      alert("Max file size 5MB");
+      return;
+    }
+
+    setFile(file);
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setPreviewUrl(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+  };
+
   if (!user) {
     return <p>Loading...</p>;
   }
@@ -37,13 +68,47 @@ export default function EditProfile() {
       <div className={css.profileCard}>
         <h1 className={css.formTitle}>Edit Profile</h1>
 
-        <Image
-          src={user.avatar || "/default-avatar.png"}
-          alt="User Avatar"
-          width={120}
-          height={120}
-          className={css.avatar}
-        />
+        <div className={css.avatarWrapper}>
+          <Image
+            src={previewUrl || user.avatar || "/default-avatar.png"}
+            alt="User Avatar"
+            width={120}
+            height={120}
+            className={css.avatar}
+          />
+          <label className={css.choosePhoto}>
+            <Image
+              src="/icons/camera.svg"
+              alt="Choose photo"
+              width={18}
+              height={18}
+            />
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              className={css.avatarInput}
+            />
+          </label>
+
+          {previewUrl && (
+            <button
+              type="button"
+              className={css.removePhoto}
+              onClick={() => {
+                setFile(null);
+                setPreviewUrl("");
+              }}
+            >
+              <Image
+                src="/icons/close.svg"
+                alt="Remove photo"
+                width={28}
+                height={28}
+              />
+            </button>
+          )}
+        </div>
 
         <form className={css.profileInfo} onSubmit={handleSubmit}>
           <div className={css.usernameWrapper}>
