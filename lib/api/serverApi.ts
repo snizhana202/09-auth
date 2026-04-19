@@ -27,7 +27,7 @@ export async function fetchNotesServer(
 }
 
 export async function fetchNoteByIdServer(id: string,): Promise<Note> {
-  const cookieStore = cookies().toString
+  const cookieStore = await  cookies();
   const { data } = await api.get(`/notes/${id}`, {
     headers: { Cookie: cookieStore.toString() },
   });
@@ -35,9 +35,9 @@ export async function fetchNoteByIdServer(id: string,): Promise<Note> {
 }
 
 export async function checkSessionServer(): Promise<AxiosResponse<CheckSessionResponse>> {
-  const cookieStore = cookies().toString();
+  const cookieStore = await cookies();
   const response  = await api.get<CheckSessionResponse>("/auth/session", {
-    headers: { Cookie: cookieStore },
+    headers: { Cookie: cookieStore.toString() },
   });
   return response;
 }
