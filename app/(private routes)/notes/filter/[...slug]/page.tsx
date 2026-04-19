@@ -11,13 +11,12 @@ import type { Metadata } from "next";
 import { cookies } from "next/headers";
 
 interface NotesFiltersProps {
-  params: { slug: string[] };
+  params: Promise<{ slug: string[] }>;
 }
 
-export async function generateMetadata({
-  params,
-}: NotesFiltersProps): Promise<Metadata> {
-  const slug = params.slug ?? ["all"];
+export async function generateMetadata(
+ { params }: NotesFiltersProps): Promise<Metadata> {
+    const {slug} = await params;
   const category = slug[0] === "all" ? "" : slug[0];
 
   return {
@@ -40,7 +39,7 @@ export async function generateMetadata({
 }
 
 export default async function NotesFilters({ params }: NotesFiltersProps) {
-  const slug = params.slug ?? ["all"];
+  const {slug} = await params ?? ["all"];
   const category = slug[0] === "all" ? "" : slug[0];
 
   const queryClient = new QueryClient();
@@ -48,8 +47,8 @@ export default async function NotesFilters({ params }: NotesFiltersProps) {
   await queryClient.prefetchQuery({
     queryKey: ["notes", category],
     queryFn: async () => {
-       const cookieStore = cookies().toString();
-      return fetchNotesServer( 1, 12, category, cookieStore);
+       const cookieStore = await cookies();
+      return fetchNotesServer( 1, 12, category, cookieStore.toString());
     },
   });
 

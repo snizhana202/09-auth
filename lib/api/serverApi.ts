@@ -10,7 +10,7 @@ export async function fetchNotesServer(
   tag?: string,
   search?: string,
 ) {
-  const cookieStore = cookies().toString();
+  const cookieStore = await cookies();
   const params: Record<string, unknown> = {
     page,
     perPage,
@@ -20,7 +20,7 @@ export async function fetchNotesServer(
 
   const { data } = await api.get("/notes", {
     params,
-    headers: { Cookie: cookieStore },
+    headers: { Cookie: cookieStore.toString() },
   });
   return data;
 }
