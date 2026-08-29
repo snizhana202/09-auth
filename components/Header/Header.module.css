@@ -3,22 +3,22 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
-  background-color: #333;
-  color: white;
+  background-color: #4a2c2a;
 }
 
 .header a {
   text-decoration: none;
-  color: white;
+  color: #fdf6ec;
   font-size: 1.5rem;
   font-weight: bold;
 }
 
 .header a:hover {
-  color: #ddd;
+  color: #fff;
 }
 
 .navigation {
+  align-items: center;
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -28,10 +28,10 @@
 
 .navigation li a {
   text-decoration: none;
-  color: white;
+  color: #d7b29d;
   font-size: 1rem;
 }
 
 .navigation li a:hover {
-  color: #ddd;
+  color: #fff;
 }
