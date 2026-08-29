@@ -3,23 +3,27 @@
 }
 
 .container {
-  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  width: 70%;
   max-width: 1280px;
   margin: 0px auto;
-  padding: 0 16px 16px;
+  padding: 40px 16px;
 }
 
 .title {
+  margin: 0;
   font-size: 36px;
   font-weight: 700;
-  color: #1a1a1a;
-  margin-bottom: 60px;
+  color: #4a2c2a;
   text-align: center;
 }
 
 .description {
-  font-size: 18px;
-  color: #444444;
+  margin: 0;
+  font-size: 20px;
+  color: black;
   line-height: 28px;
-  margin-bottom: 16px;
 }
