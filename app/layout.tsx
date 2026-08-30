@@ -3,10 +3,10 @@ import "./globals.css";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
-import { Roboto } from 'next/font/google';
+import { Roboto } from "next/font/google";
 import "./globals.css";
-import AuthProvider from '@/components/AuthProvider/AuthProvider';
-
+import AuthProvider from "@/components/AuthProvider/AuthProvider";
+import layoutCss from "./layout.module.css";
 
 export const metadata: Metadata = {
   title: "Note Hub",
@@ -21,36 +21,36 @@ export const metadata: Metadata = {
         width: 1200,
         height: 630,
         alt: "Note Hub Open Graph Image",
-      }
-    ]
-  }
+      },
+    ],
+  },
 };
 
 const roboto = Roboto({
-  subsets: ['latin'], 
-  weight: ['400', '700'],
-  variable: '--font-roboto', 
-  display: 'swap', 
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-roboto",
+  display: "swap",
 });
 
 export default function RootLayout({
   children,
   modal,
-}: Readonly<{ 
+}: Readonly<{
   children: React.ReactNode;
   modal: React.ReactNode;
 }>) {
   return (
     <html lang="en">
-      <body className={roboto.variable}>
+      <body className={`${roboto.variable} ${layoutCss.wrapper}`}>
         <TanStackProvider>
           <AuthProvider>
-          <Header />
-          <main className="mx-auto w-full max-w-6xl flex-1 px-6 py-10">
-            {children}
-            {modal}
-          </main>
-          <Footer />
+            <Header />
+            <main className={layoutCss.main}>
+              {children}
+              {modal}
+            </main>
+            <Footer />
           </AuthProvider>
         </TanStackProvider>
       </body>
