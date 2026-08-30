@@ -1,9 +1,18 @@
-/* app/globals.css */
-
 body {
   color: var(--foreground);
   background: var(--background);
   font-family: var(--font-roboto), sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
 }
