@@ -1,12 +1,16 @@
-/* components/Footer.module.css */
-
 .footer {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
   padding: 20px;
-  background-color: #f0f0f0;
+  background-color: #4a2c2a;
   text-align: center;
   font-size: 14px;
-  color: #555;
-  border-top: 1px solid #ddd;
+  color: #fdf6ec;
+}
+
+.footer p {
+  margin: 0;
 }
 
 .wrap {
@@ -16,7 +20,7 @@
 }
 
 .footer a {
-  color: #226ec5;
+  color: #fdf6ec;
   font-weight: 600;
   text-decoration: none;
 }
