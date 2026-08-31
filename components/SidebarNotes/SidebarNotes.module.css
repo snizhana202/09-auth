@@ -1,24 +1,32 @@
 .menuList {
   list-style-type: none;
   margin: 0;
-  padding: 0;
-  background-color: #444;
-  
-}
-
-.menuItem {
-  margin-bottom: 16px;
+  padding: 26px 10px;
+  background-color: #4a2c2a;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 100%;
 }
 
 .menuLink {
   text-decoration: none;
-  color: white;
+  color: #d7b29d;
   font-size: 16px;
+  font-weight: 500;
   display: block;
-  padding: 8px 16px;
+  padding: 10px 14px;
+  border-radius: 8px;
   transition: background-color 0.3s ease;
 }
 
 .menuLink:hover {
   color: #ddd;
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.menuLink.active {
+  background-color: rgba(255, 255, 255, 0.12);
+  color: #ddd;
+  font-weight: 600;
 }
