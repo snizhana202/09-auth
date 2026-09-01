@@ -1,11 +1,9 @@
-// app/notes/filter/[...slug]/page.tsx
-
 import {
   QueryClient,
   HydrationBoundary,
   dehydrate,
 } from "@tanstack/react-query";
-import { fetchNotesServer  } from "@/lib/api/serverApi";
+import { fetchNotesServer } from "@/lib/api/serverApi";
 import NotesClient from "./Notes.client";
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
@@ -14,9 +12,10 @@ interface NotesFiltersProps {
   params: Promise<{ slug: string[] }>;
 }
 
-export async function generateMetadata(
- { params }: NotesFiltersProps): Promise<Metadata> {
-    const {slug} = await params;
+export async function generateMetadata({
+  params,
+}: NotesFiltersProps): Promise<Metadata> {
+  const { slug } = await params;
   const category = slug[0] === "all" ? "" : slug[0];
 
   return {
@@ -39,7 +38,7 @@ export async function generateMetadata(
 }
 
 export default async function NotesFilters({ params }: NotesFiltersProps) {
-  const {slug} = await params ?? ["all"];
+  const { slug } = (await params) ?? ["all"];
   const category = slug[0] === "all" ? "" : slug[0];
 
   const queryClient = new QueryClient();
@@ -47,15 +46,25 @@ export default async function NotesFilters({ params }: NotesFiltersProps) {
   await queryClient.prefetchQuery({
     queryKey: ["notes", category],
     queryFn: async () => {
-       const cookieStore = await cookies();
-      return fetchNotesServer( 1, 12, category, cookieStore.toString());
+      const cookieStore = await cookies();
+      return fetchNotesServer(1, 12, category, cookieStore.toString());
     },
   });
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <div className="rounded-xl border border-border bg-surface p-8 shadow-sm">
-        <h1>Notes List</h1>
+        <h1
+          style={{
+            width: "90%",
+            maxWidth: "1280px",
+            margin: "0 auto",
+            padding: "0 16px",
+            color: "#4a2c2a",
+          }}
+        >
+          Notes List
+        </h1>
         <NotesClient tag={category} />
       </div>
     </HydrationBoundary>

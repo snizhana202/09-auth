@@ -1,4 +1,3 @@
-// app/notes/filter/[...slug]/Notes.client.tsx
 "use client";
 
 import css from "@/components/NotePages/NotePages.module.css";
@@ -10,7 +9,6 @@ import { useDebouncedCallback } from "use-debounce";
 import SearchBox from "@/components/SearchBox/SearchBox";
 import Pagination from "@/components/Pagination/Pagination";
 import Link from "next/link";
-
 
 interface NotesClientProps {
   tag: string;
@@ -57,9 +55,7 @@ export default function NotesClient({ tag }: NotesClientProps) {
       {isLoading && <p>Loading...</p>}
       {error && <p>Error loading notes</p>}
 
-      {data && data.notes.length > 0 && (
-        <NoteList notes={data.notes} />
-      )}
+      {data && data.notes.length > 0 && <NoteList notes={data.notes} />}
     </div>
   );
 }
