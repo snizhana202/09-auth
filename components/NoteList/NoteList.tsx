@@ -1,5 +1,3 @@
-// components/NoteList/NoteList.tsx
-
 import css from "./NoteList.module.css";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteNote } from "@/lib/api/clientApi";
