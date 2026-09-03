@@ -1,4 +1,3 @@
-// app/profile/edit/page.tsx
 "use client";
 
 import css from "@/components/EditProfilePage/EditProfilePage.module.css";
@@ -7,31 +6,34 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/lib/store/authStore";
 import { updateMe } from "@/lib/api/clientApi";
+import { FiUser, FiCamera } from "react-icons/fi";
+import { MdOutlineClose } from "react-icons/md";
 
 export default function EditProfile() {
   const router = useRouter();
   const { user, setUser } = useAuthStore();
   const [username, setUsername] = useState(user?.username ?? "");
-  const [previewUrl, setPreviewUrl] = useState<string>(user?.avatar || "");
+  const [previewUrl, setPreviewUrl] = useState<string>(
+    user?.avatar && !user.avatar.includes("default-avatar") ? user.avatar : "",
+  );
   const [file, setFile] = useState<File | null>(null);
 
-
   const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
-  e.preventDefault();
-  try {
-    const formData = new FormData();
-    formData.append("username", username);
-    if (file) {
-      formData.append("avatar", file);
-    }
+    e.preventDefault();
+    try {
+      const formData = new FormData();
+      formData.append("username", username);
+      if (file) {
+        formData.append("avatar", file);
+      }
 
-    const updatedUser = await updateMe(formData);
-    setUser(updatedUser);
-    router.push("/profile");
-  } catch (error) {
-    console.error("Failed to update profile:", error);
-  }
-};
+      const updatedUser = await updateMe(formData);
+      setUser(updatedUser);
+      router.push("/profile");
+    } catch (error) {
+      console.error("Failed to update profile:", error);
+    }
+  };
 
   const handleCancel = () => {
     router.back();
@@ -66,23 +68,22 @@ export default function EditProfile() {
   return (
     <main className={css.mainContent}>
       <div className={css.profileCard}>
-        <h1 className={css.formTitle}>Edit Profile</h1>
-
         <div className={css.avatarWrapper}>
-          <Image
-            src={previewUrl || user.avatar || "/default-avatar.png"}
-            alt="User Avatar"
-            width={120}
-            height={120}
-            className={css.avatar}
-          />
-          <label className={css.choosePhoto}>
+          {previewUrl ? (
             <Image
-              src="/icons/camera.svg"
-              alt="Choose photo"
-              width={18}
-              height={18}
+              src={previewUrl}
+              alt="User Avatar"
+              width={120}
+              height={120}
+              className={css.avatar}
             />
+          ) : (
+            <div className={css.avatarPlaceholder}>
+              <FiUser size={60} />
+            </div>
+          )}
+          <label className={css.choosePhoto}>
+            <FiCamera size={18} />
             <input
               type="file"
               accept="image/*"
@@ -100,17 +101,14 @@ export default function EditProfile() {
                 setPreviewUrl("");
               }}
             >
-              <Image
-                src="/icons/close.svg"
-                alt="Remove photo"
-                width={28}
-                height={28}
-              />
+              <MdOutlineClose size={22} />
             </button>
           )}
         </div>
 
         <form className={css.profileInfo} onSubmit={handleSubmit}>
+          <h1 className={css.formTitle}>Edit Profile</h1>
+
           <div className={css.usernameWrapper}>
             <label htmlFor="username">Username:</label>
             <input
